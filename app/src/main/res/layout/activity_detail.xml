@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_view_height"
+            android:layout_marginBottom="@dimen/margin"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/label_title"
+                    style="@style/text_view_label"
+                    android:text="@string/label_title" />
+
+                <TextView
+                    android:id="@+id/text_view_title"
+                    style="@style/text_view_text"
+                    android:layout_toEndOf="@id/label_title" />
+
+                <TextView
+                    android:id="@+id/label_vote"
+                    style="@style/text_view_label"
+                    android:layout_below="@id/text_view_title"
+                    android:text="@string/label_vote" />
+
+                <TextView
+                    android:id="@+id/text_view_vote"
+                    style="@style/text_view_text"
+                    android:layout_below="@id/text_view_title"
+                    android:layout_toEndOf="@id/label_vote" />
+
+                <TextView
+                    android:id="@+id/label_release"
+                    style="@style/text_view_label"
+                    android:layout_below="@id/text_view_vote"
+                    android:text="@string/label_release" />
+
+                <TextView
+                    android:id="@+id/text_view_release"
+                    style="@style/text_view_text"
+                    android:layout_below="@id/text_view_vote"
+                    android:layout_toEndOf="@id/label_release" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/image_view_poster"
+                style="@style/image_view_poster" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/label_plot"
+            style="@style/text_view_label"
+            android:text="@string/label_plot" />
+
+        <TextView
+            android:id="@+id/text_view_plot"
+            style="@style/text_view_text" />
+
+    </LinearLayout>
+
+</ScrollView>

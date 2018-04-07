@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Cinematrix</string>
+    <string name="most_popular">Most popular</string>
+    <string name="top_rated">Top rated</string>
+    <string name="sort_by">Sort</string>
+    <string name="label_release">Release:</string>
+    <string name="label_vote">Vote:</string>
+    <string name="label_title">Title:</string>
+    <string name="label_plot">Plot:</string>
+</resources>
