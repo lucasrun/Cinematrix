@@ -77,30 +77,24 @@
 
     <View style="@style/view" />
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ListView
+            android:id="@+id/list_view_trailer"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1" />
 
-            <ListView
-                android:id="@+id/list_view_trailer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+        <ListView
+            android:id="@+id/list_view_review"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
 
-            <ListView
-                android:id="@+id/list_view_review"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 
 </LinearLayout>

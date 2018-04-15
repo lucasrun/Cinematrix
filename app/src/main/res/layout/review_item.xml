@@ -12,7 +12,4 @@
         android:id="@+id/text_view_review"
         style="@style/text_view_text"/>
 
-    <View
-        style="@style/view" />
-
 </LinearLayout>

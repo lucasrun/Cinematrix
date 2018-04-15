@@ -137,6 +137,7 @@ public class ReviewAsyncTask extends AsyncTask<String, Void, Review[]> {
             review[i].setAuthor(jsonReview.getString(AUTHOR));
             review[i].setContent(jsonReview.getString(CONTENT));
         }
+
         return review;
 
     }

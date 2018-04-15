@@ -192,7 +192,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
                 @Override
                 public void reviewTaskCompleted(Review[] review) {
                     listViewReview.setAdapter(new ReviewAdapter(getApplicationContext(), review));
-
                 }
             };
 
