@@ -6,11 +6,11 @@
     android:background="@color/colorPrimary"
     android:id="@+id/grid_view"
     android:gravity="center"
-    android:stretchMode="spacingWidthUniform"
-    android:verticalSpacing="10dp"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="0dp"
+    android:horizontalSpacing="0dp"
     android:numColumns="auto_fit"
     android:columnWidth="100dp"
-    tools:context="com.example.android.cinematrix.MainActivity"
-    android:layout_margin="10dp">
+    tools:context="com.example.android.cinematrix.MainActivity">
 
 </GridView>

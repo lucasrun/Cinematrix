@@ -71,11 +71,11 @@
                 android:id="@+id/text_view_plot"
                 style="@style/text_view_text" />
 
-            <View style="@style/view" />
-
         </LinearLayout>
 
     </ScrollView>
+
+    <View style="@style/view" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
             <ListView
                 android:id="@+id/list_view_review"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
         </LinearLayout>
