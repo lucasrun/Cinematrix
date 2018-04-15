@@ -3,9 +3,6 @@ package com.example.android.cinematrix.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by mhesah on 2018-04-08.
  */
@@ -25,18 +22,11 @@ public class Trailer implements Parcelable {
 
     private static final String HTTP_POSTER_ENTRY_URL = "http://img.youtube.com/vi/";
     private static final String HTTP_POSTER_END_URL = "/0.jpg";
-    private static final String ID = "id";
-    private static final String KEY = "key";
     private String mId;
     private String mTrailerKey;
 
     // purpose empty constructor
     public Trailer() {
-    }
-
-    public Trailer(JSONObject trailer) throws JSONException {
-        mId = trailer.getString(ID);
-        mTrailerKey = trailer.getString(KEY);
     }
 
     private Trailer(Parcel in) {

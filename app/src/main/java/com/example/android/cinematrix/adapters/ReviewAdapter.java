@@ -28,6 +28,7 @@ public class ReviewAdapter extends BaseAdapter {
         if (mReview == null || mReview.length == 0) {
             return -1;
         }
+
         return mReview.length;
     }
 
@@ -52,7 +53,6 @@ public class ReviewAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.review_item, null);
         }
-
         reviewer = convertView.findViewById(R.id.text_view_reviewer);
         reviewer.setText(mReview[position].getAuthor());
         review = convertView.findViewById(R.id.text_view_review);

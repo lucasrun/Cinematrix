@@ -3,9 +3,6 @@ package com.example.android.cinematrix.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by mhesah on 2018-04-08.
  */
@@ -23,21 +20,12 @@ public class Review implements Parcelable {
         }
     };
 
-    private static final String ID = "id";
-    private static final String AUTHOR = "author";
-    private static final String CONTENT = "content";
     private String mId;
     private String mAuthor;
     private String mContent;
 
     // purpose empty constructor
     public Review() {
-    }
-
-    public Review(JSONObject review) throws JSONException {
-        mId = review.getString(ID);
-        mAuthor = review.getString(AUTHOR);
-        mContent = review.getString(CONTENT);
     }
 
     protected Review(Parcel in) {

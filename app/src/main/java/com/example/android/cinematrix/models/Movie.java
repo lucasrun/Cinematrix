@@ -3,9 +3,6 @@ package com.example.android.cinematrix.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Created by mhesah on 2018-04-01.
  */
@@ -24,12 +21,6 @@ public class Movie implements Parcelable {
     };
 
     private static final String HTTP_POSTER_ENTRY_URL = "https://image.tmdb.org/t/p/w185";
-    private static final String ID = "id";
-    private static final String POSTER = "poster_path";
-    private static final String TITLE = "original_title";
-    private static final String VOTE = "vote_average";
-    private static final String RELEASE = "release_date";
-    private static final String PLOT = "overview";
 
     private String mId;
     private String mPoster;
@@ -40,15 +31,6 @@ public class Movie implements Parcelable {
 
     // purpose empty constructor
     public Movie() {
-    }
-
-    public Movie(JSONObject movie) throws JSONException {
-        mId = movie.getString(ID);
-        mPoster = movie.getString(POSTER);
-        mTitle = movie.getString(TITLE);
-        mVote = movie.getString(VOTE);
-        mRelease = movie.getString(RELEASE);
-        mPlot = movie.getString(PLOT);
     }
 
     private Movie(Parcel in) {
