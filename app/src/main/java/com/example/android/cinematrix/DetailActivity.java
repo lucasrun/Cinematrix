@@ -175,7 +175,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
             TrailerTaskCompleted taskCompleted = new TrailerTaskCompleted() {
                 @Override
                 public void trailerTaskCompleted(Trailer[] trailer) {
-
+                    listViewTrailer.setAdapter(new TrailerAdapter(getApplicationContext(), trailer));
                 }
             };
 
@@ -191,7 +191,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
             ReviewTaskCompleted taskCompleted = new ReviewTaskCompleted() {
                 @Override
                 public void reviewTaskCompleted(Review[] review) {
-
+                    listViewReview.setAdapter(new ReviewAdapter(getApplicationContext(), review));
                 }
             };
 
