@@ -1,4 +1,4 @@
-package com.example.android.cinematrix.utils;
+package com.example.android.cinematrix.adapters;
 
 import android.content.Context;
 import android.view.View;
@@ -7,38 +7,38 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.android.cinematrix.R;
-import com.example.android.cinematrix.model.Movie;
+import com.example.android.cinematrix.models.Trailer;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by mhesah on 2018-04-01.
+ * Created by mhesah on 2018-04-14.
  */
 
-public class ImageAdapter extends BaseAdapter {
+public class TrailerAdapter  extends BaseAdapter {
     private final Context mContext;
-    private final Movie[] mMovie;
-    public final static int POSTER_HEIGHT = 278;
-    public final static int POSTER_WIDTH = 185;
+    private final Trailer[] mTrailer;
+    public final static int TRAILER_POSTER_HEIGHT = 90;
+    public final static int TRAILER_POSTER_WIDTH = 160;
 
-    public ImageAdapter(Context context, Movie[] movie) {
+    public TrailerAdapter(Context context, Trailer[] trailer) {
         mContext = context;
-        mMovie = movie;
+        mTrailer = trailer;
     }
 
     @Override
     public int getCount() {
-        if (mMovie == null || mMovie.length == 0) {
+        if (mTrailer == null || mTrailer.length == 0) {
             return -1;
         }
-        return mMovie.length;
+        return mTrailer.length;
     }
 
     @Override
-    public Movie getItem(int position) {
-        if (mMovie == null || mMovie.length == 0) {
+    public Trailer getItem(int position) {
+        if (mTrailer == null || mTrailer.length == 0) {
             return null;
         }
-        return mMovie[position];
+        return mTrailer[position];
     }
 
     @Override
@@ -58,8 +58,8 @@ public class ImageAdapter extends BaseAdapter {
         }
 
         Picasso.with(mContext)
-                .load(mMovie[position].getPoster())
-                .resize(POSTER_WIDTH, POSTER_HEIGHT)
+                .load(mTrailer[position].getPoster())
+                .resize(TRAILER_POSTER_WIDTH, TRAILER_POSTER_HEIGHT)
                 .error(R.drawable.error_retrieving_movies)
                 .placeholder(R.drawable.retrieving_movies)
                 .into(imageView);

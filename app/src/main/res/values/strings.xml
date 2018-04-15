@@ -2,9 +2,12 @@
     <string name="app_name">Cinematrix</string>
     <string name="most_popular">Most popular</string>
     <string name="top_rated">Top rated</string>
-    <string name="sort_by">Sort</string>
+    <string name="show">Show</string>
     <string name="label_release">Release:</string>
     <string name="label_vote">Vote:</string>
     <string name="label_title">Title:</string>
-    <string name="label_plot">Plot:</string>
+    <string name="content_authority">com.example.android.cinematrix</string>
+    <string name="favourite">Library</string>
+    <string name="add">Add</string>
+    <string name="remove">Remove</string>
 </resources>

@@ -14,12 +14,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.android.cinematrix.model.Movie;
-import com.example.android.cinematrix.utils.ImageAdapter;
-import com.example.android.cinematrix.utils.MovieAsyncTask;
-import com.example.android.cinematrix.utils.OnTaskCompleted;
+import com.example.android.cinematrix.models.Movie;
+import com.example.android.cinematrix.adapters.MovieAdapter;
+import com.example.android.cinematrix.utilities.MovieAsyncTask;
+import com.example.android.cinematrix.interfaces.MovieTaskCompleted;
 
-public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
+public class MainActivity extends AppCompatActivity implements MovieTaskCompleted {
 
     public static final String PARCEL_MOVIE = "PARCEL_MOVIE";
     private static final String SORT_BY_POPULARITY = "popular";
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
                 for (int i = 0; i < movieCount; i++) {
                     movie[i] = (Movie) parcelable[i];
                 }
-                gridView.setAdapter(new ImageAdapter(this, movie));
+                gridView.setAdapter(new MovieAdapter(this, movie));
             }
         }
     }
@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
                 return true;
             case R.id.top_rated:
                 getData(SORT_BY_RATING);
+                return true;
+            case R.id.library:
+                getLocalData();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -99,10 +102,10 @@ public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
 
     private void getData(String sortType)  {
         if (isNetworkAvailable()) {
-            OnTaskCompleted taskCompleted = new OnTaskCompleted() {
+            MovieTaskCompleted taskCompleted = new MovieTaskCompleted() {
                 @Override
-                public void onTaskCompleted(Movie[] movies) {
-                    gridView.setAdapter(new ImageAdapter(getApplicationContext(), movies));
+                public void movieTaskCompleted(Movie[] movies) {
+                    gridView.setAdapter(new MovieAdapter(getApplicationContext(), movies));
                 }
             };
 
@@ -111,6 +114,10 @@ public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
         } else {
             Toast.makeText(this, NO_INTERNET, Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void getLocalData()  {
+        // TODO: 2018-04-14 get sql data and paste it using adapter in gridview
     }
 
     private boolean isNetworkAvailable() {
@@ -122,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnTaskCompleted {
     }
 
     @Override
-    public void onTaskCompleted(Movie[] movie) {
+    public void movieTaskCompleted(Movie[] movie) {
 
     }
 }
