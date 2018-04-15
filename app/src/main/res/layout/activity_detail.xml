@@ -1,87 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/image_view_height"
-            android:layout_marginBottom="@dimen/margin"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/image_view_height"
+                android:layout_marginBottom="@dimen/margin"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/label_title"
-                    style="@style/text_view_label"
-                    android:text="@string/label_title" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/text_view_title"
-                    style="@style/text_view_text"
-                    android:layout_below="@+id/label_title" />
+                    <TextView
+                        android:id="@+id/label_title"
+                        style="@style/text_view_label"
+                        android:text="@string/label_title" />
 
-                <TextView
-                    android:id="@+id/label_vote"
-                    style="@style/text_view_label"
-                    android:layout_below="@+id/text_view_title"
-                    android:text="@string/label_vote" />
+                    <TextView
+                        android:id="@+id/text_view_title"
+                        style="@style/text_view_text"
+                        android:layout_below="@+id/label_title" />
 
-                <TextView
-                    android:id="@+id/text_view_vote"
-                    style="@style/text_view_text"
-                    android:layout_below="@+id/label_vote" />
+                    <TextView
+                        android:id="@+id/label_vote"
+                        style="@style/text_view_label"
+                        android:layout_below="@+id/text_view_title"
+                        android:text="@string/label_vote" />
 
-                <TextView
-                    android:id="@+id/label_release"
-                    style="@style/text_view_label"
-                    android:layout_below="@+id/text_view_vote"
-                    android:text="@string/label_release" />
+                    <TextView
+                        android:id="@+id/text_view_vote"
+                        style="@style/text_view_text"
+                        android:layout_below="@+id/label_vote" />
 
-                <TextView
-                    android:id="@+id/text_view_release"
-                    style="@style/text_view_text"
-                    android:layout_below="@+id/label_release" />
+                    <TextView
+                        android:id="@+id/label_release"
+                        style="@style/text_view_label"
+                        android:layout_below="@+id/text_view_vote"
+                        android:text="@string/label_release" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/text_view_release"
+                        style="@style/text_view_text"
+                        android:layout_below="@+id/label_release" />
 
-            <ImageView
-                android:id="@+id/image_view_poster"
-                style="@style/image_view_poster" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/image_view_poster"
+                    style="@style/image_view_poster" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_view_plot"
+                style="@style/text_view_text" />
+
+            <View style="@style/view" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_view_plot"
-            style="@style/text_view_text" />
+    </ScrollView>
 
-        <HorizontalScrollView
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/list_view_trailer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-        </HorizontalScrollView>
+            <ListView
+                android:id="@+id/list_view_review"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-        <ListView
-            android:id="@+id/list_view_review"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        </LinearLayout>
 
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-</ScrollView>
+</LinearLayout>

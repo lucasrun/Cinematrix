@@ -53,10 +53,9 @@ public class ReviewAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.review_item, null);
         }
 
-        reviewer = (TextView) convertView.findViewById(R.id.text_view_reviewer);
+        reviewer = convertView.findViewById(R.id.text_view_reviewer);
         reviewer.setText(mReview[position].getAuthor());
-
-        review = (TextView) convertView.findViewById(R.id.text_view_review);
+        review = convertView.findViewById(R.id.text_view_review);
         review.setText(mReview[position].getContent());
 
         return convertView;
