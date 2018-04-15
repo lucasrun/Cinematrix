@@ -24,17 +24,8 @@ public class Provider extends ContentProvider {
     private static final String FIRST_ROW = "1";
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    //    private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private Helper mHelper;
 
-//    static UriMatcher buildUriMatcher() {
-//        final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-//        final String authority = Contract.CONTENT_AUTHORITY;
-//
-//        uriMatcher.addURI(authority, Contract.PATH_MOVIE, MOVIE);
-//
-//        return uriMatcher;
-//    }
+    private Helper mHelper;
 
     @Override
     public boolean onCreate() {
