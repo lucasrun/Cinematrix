@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
                 getData(SORT_BY_RATING);
                 return true;
             case R.id.library:
-                getLocalData();
+                getLocalData(getBaseContext());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
         }
     }
 
-    private void getLocalData()  {
+    private void getLocalData(Context context)  {
         MovieTaskCompleted taskCompleted = new MovieTaskCompleted() {
             @Override
             public void movieTaskCompleted(ArrayList<Movie> movie) {
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
             }
         };
 
-        FavouriteAsyncTask favouriteAsyncTask = new FavouriteAsyncTask(taskCompleted);
+        FavouriteAsyncTask favouriteAsyncTask = new FavouriteAsyncTask(taskCompleted, context);
         favouriteAsyncTask.execute();
     }
 

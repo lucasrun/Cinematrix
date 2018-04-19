@@ -29,12 +29,13 @@ public class FavouriteAsyncTask extends AsyncTask<Void, Void, ArrayList<Movie>> 
     private Context mContext;
     private MovieTaskCompleted mListener;
 
-    public FavouriteAsyncTask(Context context) {
-        mContext = context;
-    }
+//    public FavouriteAsyncTask(Context context) {
+//        mContext = context;
+//    }
 
-    public FavouriteAsyncTask(MovieTaskCompleted listener) {
+    public FavouriteAsyncTask(MovieTaskCompleted listener, Context context) {
         mListener = listener;
+        mContext = context;
     }
 
     @Override
