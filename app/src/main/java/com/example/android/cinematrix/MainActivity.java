@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,10 +13,13 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.example.android.cinematrix.models.Movie;
 import com.example.android.cinematrix.adapters.MovieAdapter;
-import com.example.android.cinematrix.utilities.MovieAsyncTask;
 import com.example.android.cinematrix.interfaces.MovieTaskCompleted;
+import com.example.android.cinematrix.models.Movie;
+import com.example.android.cinematrix.utilities.FavouriteAsyncTask;
+import com.example.android.cinematrix.utilities.MovieAsyncTask;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MovieTaskCompleted {
 
@@ -47,17 +49,13 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
         if (savedInstanceState == null) {
             getData(SORT_BY_POPULARITY);
         } else {
-            Parcelable[] parcelable = savedInstanceState.getParcelableArray(PARCEL_MOVIE);
+            ArrayList<Movie> movie = savedInstanceState.getParcelableArrayList(PARCEL_MOVIE);
 
-            if (parcelable != null) {
-                int movieCount = parcelable.length;
-                Movie[] movie = new Movie[movieCount];
-                for (int i = 0; i < movieCount; i++) {
-                    movie[i] = (Movie) parcelable[i];
-                }
+            if (movie != null) {
                 gridView.setAdapter(new MovieAdapter(this, movie));
             }
         }
+
     }
 
     // setting action bar menu
@@ -90,11 +88,11 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
 
         int movieCount = gridView.getCount();
         if (movieCount > 0) {
-            Movie[] movie = new Movie[movieCount];
+            ArrayList<Movie> movie = new ArrayList<>();
             for (int i = 0; i < movieCount; i++) {
-                movie[i] = (Movie) gridView.getItemAtPosition(i);
+                movie.add((Movie) gridView.getItemAtPosition(i));
             }
-            outState.putParcelableArray(PARCEL_MOVIE, movie);
+            outState.putParcelableArrayList(PARCEL_MOVIE, movie);
         }
 
         super.onSaveInstanceState(outState);
@@ -104,8 +102,8 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
         if (isNetworkAvailable()) {
             MovieTaskCompleted taskCompleted = new MovieTaskCompleted() {
                 @Override
-                public void movieTaskCompleted(Movie[] movies) {
-                    gridView.setAdapter(new MovieAdapter(getApplicationContext(), movies));
+                public void movieTaskCompleted(ArrayList<Movie> movie) {
+                    gridView.setAdapter(new MovieAdapter(getApplicationContext(), movie));
                 }
             };
 
@@ -117,7 +115,15 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
     }
 
     private void getLocalData()  {
-        // TODO: 2018-04-14 get sql data and paste it using adapter in gridview
+        MovieTaskCompleted taskCompleted = new MovieTaskCompleted() {
+            @Override
+            public void movieTaskCompleted(ArrayList<Movie> movie) {
+                gridView.setAdapter(new MovieAdapter(getApplicationContext(), movie));
+            }
+        };
+
+        FavouriteAsyncTask favouriteAsyncTask = new FavouriteAsyncTask(taskCompleted);
+        favouriteAsyncTask.execute();
     }
 
     private boolean isNetworkAvailable() {
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
     }
 
     @Override
-    public void movieTaskCompleted(Movie[] movie) {
+    public void movieTaskCompleted(ArrayList<Movie> movie) {
 
     }
 }

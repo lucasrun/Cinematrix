@@ -1,5 +1,6 @@
 package com.example.android.cinematrix;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.android.cinematrix.adapters.ReviewAdapter;
 import com.example.android.cinematrix.adapters.TrailerAdapter;
+import com.example.android.cinematrix.database.Contract;
 import com.example.android.cinematrix.interfaces.ReviewTaskCompleted;
 import com.example.android.cinematrix.interfaces.TrailerTaskCompleted;
 import com.example.android.cinematrix.models.Movie;
@@ -77,15 +80,15 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
         title.setText(movie.getTitle());
 
         if (movie.getVote() != null) {
-            vote.setText("" + movie.getVote());
+            vote.setText(movie.getVote());
         } else vote.setText(MISSING_INFO);
 
         if (movie.getRelease() != null) {
-            release.setText("" + movie.getRelease());
+            release.setText(movie.getRelease());
         } else release.setText(MISSING_INFO);
 
         if (movie.getPlot() != null) {
-            plot.setText("" + movie.getPlot());
+            plot.setText(movie.getPlot());
         } else plot.setText(MISSING_INFO);
 
         listViewTrailer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -204,6 +207,18 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
 
     private void favourite_add() {
         // TODO: 2018-04-14 add to sql db if doesnt exist
+
+            ContentValues values = new ContentValues();
+
+       //     values.put(Contract.Entry.MOVIE_URL, builder.toString());
+
+            Uri uri = getContentResolver().insert(Contract.Entry.CONTENT_URI, values);
+
+            if (uri != null) {
+                Toast.makeText(this, "movie saved", Toast.LENGTH_SHORT).show();
+                Log.i("insert successsful", "suc");
+            } else
+                Log.i("insert not successsful", "suc");
     }
 
     private void favourite_remove() {

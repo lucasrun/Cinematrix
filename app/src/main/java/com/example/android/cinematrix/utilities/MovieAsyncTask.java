@@ -19,12 +19,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Created by mhesah on 2018-04-01.
  */
 
-public class MovieAsyncTask extends AsyncTask<String, Void, Movie[]> {
+public class MovieAsyncTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
     private static final String PERSONAL_API_KEY = BuildConfig.HIDDEN_API_KEY;
     private static final String LOG_TAG = MovieAsyncTask.class.getSimpleName();
@@ -45,7 +46,7 @@ public class MovieAsyncTask extends AsyncTask<String, Void, Movie[]> {
     }
 
     @Override
-    protected Movie[] doInBackground(String... params) {
+    protected ArrayList<Movie> doInBackground(String... params) {
         BufferedReader reader = null;
         String jsonResponse = "";
         HttpURLConnection urlConnection = null;
@@ -116,30 +117,19 @@ public class MovieAsyncTask extends AsyncTask<String, Void, Movie[]> {
         return null;
     }
 
-    private Movie[] getJsonData(String json) throws JSONException {
+    private ArrayList<Movie> getJsonData(String json) throws JSONException {
 
-        final String ID = "id";
-        final String POSTER = "poster_path";
-        final String TITLE = "original_title";
-        final String VOTE = "vote_average";
-        final String RELEASE = "release_date";
-        final String PLOT = "overview";
         final String RESULTS = "results";
 
         JSONObject root = new JSONObject(json);
         JSONArray result = root.getJSONArray(RESULTS);
 
-        Movie[] movie = new Movie[result.length()];
+        ArrayList<Movie> movie = new ArrayList<>();
 
         for (int i = 0; i < result.length(); i++) {
-            movie[i] = new Movie();
             JSONObject jsonMovie = result.getJSONObject(i);
-            movie[i].setId(jsonMovie.getString(ID));
-            movie[i].setPoster(jsonMovie.getString(POSTER));
-            movie[i].setTitle(jsonMovie.getString(TITLE));
-            movie[i].setVote(jsonMovie.getString(VOTE));
-            movie[i].setRelease(jsonMovie.getString(RELEASE));
-            movie[i].setPlot(jsonMovie.getString(PLOT));
+            Movie movieExtracted = new Movie(jsonMovie);
+            movie.add(movieExtracted);
         }
         return movie;
 
@@ -162,7 +152,7 @@ public class MovieAsyncTask extends AsyncTask<String, Void, Movie[]> {
     }
 
     @Override
-    protected void onPostExecute(Movie[] movie) {
+    protected void onPostExecute(ArrayList<Movie> movie) {
 
         super.onPostExecute(movie);
         mListener.movieTaskCompleted(movie);

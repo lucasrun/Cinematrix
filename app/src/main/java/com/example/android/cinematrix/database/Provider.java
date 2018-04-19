@@ -1,12 +1,17 @@
 package com.example.android.cinematrix.database;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+
+import static com.example.android.cinematrix.database.Contract.CONTENT_AUTHORITY;
+import static com.example.android.cinematrix.database.Contract.Entry;
+import static com.example.android.cinematrix.database.Contract.PATH_MOVIE;
 
 /**
  * Created by mhesah on 2018-04-07.
@@ -15,15 +20,22 @@ import android.util.Log;
 public class Provider extends ContentProvider {
 
     public static final String LOG_TAG = Provider.class.getSimpleName();
-    static final int MOVIE = 100;
+    private static final int MOVIES = 100;
+    private static final int MOVIES_ID = 101;
     private static final String UNKNOWN_URI = "Query failed, unknown URI: ";
     private static final String MATCH = ". Match: ";
     private static final String INSERTION_NOT_SUPPORTED = "Insertion is not supported for ";
     private static final String UPDATE_NOT_SUPPORTED = "Update is not supported for ";
     private static final String FAILED_TO_INSERT_ROW = "Failed to insert row for ";
     private static final String FIRST_ROW = "1";
+    private static final String DB_SIGN = "=?";
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    static {
+        sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_MOVIE, MOVIES);
+        sUriMatcher.addURI(CONTENT_AUTHORITY, PATH_MOVIE + "/#", MOVIES_ID);
+    }
 
     private Helper mHelper;
 
@@ -42,12 +54,18 @@ public class Provider extends ContentProvider {
         int match = sUriMatcher.match(uri);
 
         switch (match) {
-            case MOVIE: {
+            case MOVIES: {
                 cursor = database.query(
-                        Contract.Entry.TABLE_NAME, projection, selection, selectionArgs,
+                        Entry.TABLE_NAME, projection, selection, selectionArgs,
                         null, null, sortOrder);
                 break;
             }
+            case MOVIES_ID:
+                selection = Entry._ID + DB_SIGN;
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                cursor = database.query(Entry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
             default:
                 Log.e(LOG_TAG, UNKNOWN_URI + uri);
         }
@@ -63,7 +81,7 @@ public class Provider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
-            case MOVIE:
+            case MOVIES:
                 return insertItem(uri, values);
             default:
                 Log.e(LOG_TAG, INSERTION_NOT_SUPPORTED  + uri);
@@ -93,7 +111,11 @@ public class Provider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
-            case MOVIE:
+            case MOVIES:
+                return updateItem(uri, values, selection, selectionArgs);
+            case MOVIES_ID:
+                selection = Entry._ID + DB_SIGN;
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateItem(uri, values, selection, selectionArgs);
             default:
                 Log.e(LOG_TAG, UPDATE_NOT_SUPPORTED + uri);
@@ -119,12 +141,20 @@ public class Provider extends ContentProvider {
 
         if (null == selection) selection = FIRST_ROW;
         switch (match) {
-            case MOVIE:
+            case MOVIES:
                 int rowsDeleted = database.delete(Contract.Entry.TABLE_NAME, selection, selectionArgs);
                 if (rowsDeleted != 0) {
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
                 return rowsDeleted;
+            case MOVIES_ID:
+                selection = Entry._ID + DB_SIGN;
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int rowDeleted = database.delete(Entry.TABLE_NAME, selection, selectionArgs);
+                if (rowDeleted != 0) {
+                    getContext().getContentResolver().notifyChange(uri, null);
+                }
+                return rowDeleted;
             default:
                 Log.e(LOG_TAG, UNKNOWN_URI + uri);
                 return -1;
@@ -136,8 +166,10 @@ public class Provider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
 
         switch (match) {
-            case MOVIE:
+            case MOVIES:
                 return Contract.Entry.CONTENT_TYPE;
+            case MOVIES_ID:
+                return Entry.CONTENT_ITEM_TYPE;
             default:
                 Log.e(LOG_TAG, UNKNOWN_URI + uri + MATCH + match);
                 return null;

@@ -12,7 +12,7 @@ import android.provider.BaseColumns;
 public class Contract {
     public static final String CONTENT_AUTHORITY = "com.example.android.cinematrix";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-    public static final String PATH_MOVIE = "movie";
+    public static final String PATH_MOVIE = "movies";
 
     public Contract() {
     }
@@ -24,9 +24,10 @@ public class Contract {
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_MOVIE;
 
         // table
-        public static final String TABLE_NAME = "movie";
+        public static final String TABLE_NAME = "movies";
 
         // table columns
+        public static final String _ID = BaseColumns._ID;
         public static final String COLUMN_MOVIE_ID = "movie_id";
         public static final String COLUMN_POSTER = "image";
         public static final String COLUMN_TITLE = "title";

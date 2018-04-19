@@ -12,7 +12,7 @@ import com.example.android.cinematrix.database.Contract.Entry;
 public class Helper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "movie.db";
+    public static final String DATABASE_NAME = "cinematrix.db";
 
     public Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,7 +22,7 @@ public class Helper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         final String SQL_CREATE_TABLE = "CREATE TABLE " + Entry.TABLE_NAME + " (" +
                 Entry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Entry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
+                Entry.COLUMN_MOVIE_ID + " TEXT NOT NULL, " +
                 Entry.COLUMN_POSTER + " TEXT, " +
                 Entry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 Entry.COLUMN_VOTE + " TEXT, " +
