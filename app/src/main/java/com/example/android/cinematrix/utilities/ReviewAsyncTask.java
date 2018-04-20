@@ -151,7 +151,6 @@ public class ReviewAsyncTask extends AsyncTask<String, Void, Review[]> {
                 .build();
         try {
             URL url = new URL(builtUri.toString());
-            Log.i(LOG_TAG, url.toString());
             return url;
         } catch (MalformedURLException e) {
             e.printStackTrace();

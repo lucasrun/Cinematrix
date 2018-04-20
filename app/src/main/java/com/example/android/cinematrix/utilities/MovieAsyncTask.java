@@ -143,7 +143,6 @@ public class MovieAsyncTask extends AsyncTask<String, Void, ArrayList<Movie>> {
                 .build();
         try {
             URL url = new URL(builtUri.toString());
-            Log.i(LOG_TAG, url.toString());
             return url;
         } catch (MalformedURLException e) {
             e.printStackTrace();
