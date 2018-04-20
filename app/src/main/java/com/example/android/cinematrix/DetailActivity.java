@@ -3,6 +3,7 @@ package com.example.android.cinematrix;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -45,9 +46,24 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
     private static final String MISSING_INFO = "missing info";
     private static final String NO_INTERNET = "No internet connection found";
     private static final String YOUTUBE = "http://www.youtube.com/watch?v=";
+    private static final String DB_SIGN = " = ?";
     ImageView poster;
     TextView title, vote, release, plot;
     ListView listViewTrailer, listViewReview;
+
+    // checking if the movie is in favourite list already
+    public static int favourited(Context context, String id) {
+        Cursor cursor = context.getContentResolver().query(
+                Contract.Entry.CONTENT_URI,
+                null,
+                Contract.Entry.COLUMN_MOVIE_ID + DB_SIGN,
+                new String[]{id},
+                null
+        );
+        int duplicates = cursor.getCount();
+        cursor.close();
+        return duplicates;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,32 +219,35 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
     }
 
     private void favourite_add() {
-        // TODO: 2018-04-14 add to sql db if doesnt exist
 
-        Movie mMovie = getIntent().getParcelableExtra(PARCEL_MOVIE);
+        Movie movie = getIntent().getParcelableExtra(PARCEL_MOVIE);
 
-        ContentValues values = new ContentValues();
+        if (favourited(getBaseContext(), movie.getId()) == 0) {
+            ContentValues values = new ContentValues();
 
-        if (!Contract.Entry.COLUMN_MOVIE_ID.matches(mMovie.getId())) {
-            values.put(Contract.Entry.COLUMN_MOVIE_ID, mMovie.getId());
-            values.put(Contract.Entry.COLUMN_POSTER, mMovie.getPoster());
-            values.put(Contract.Entry.COLUMN_TITLE, mMovie.getTitle());
-            values.put(Contract.Entry.COLUMN_VOTE, mMovie.getVote());
-            values.put(Contract.Entry.COLUMN_RELEASE, mMovie.getRelease());
-            values.put(Contract.Entry.COLUMN_PLOT, mMovie.getPlot());
+            values.put(Contract.Entry.COLUMN_MOVIE_ID, movie.getId());
+            values.put(Contract.Entry.COLUMN_POSTER, movie.getPoster());
+            values.put(Contract.Entry.COLUMN_TITLE, movie.getTitle());
+            values.put(Contract.Entry.COLUMN_VOTE, movie.getVote());
+            values.put(Contract.Entry.COLUMN_RELEASE, movie.getRelease());
+            values.put(Contract.Entry.COLUMN_PLOT, movie.getPlot());
 
             this.getContentResolver().insert(Contract.Entry.CONTENT_URI, values);
-        }
 
+        }
     }
 
     private void favourite_remove() {
-        // TODO: 2018-04-14 remove from sql db if exists
 
+        Movie movie = getIntent().getParcelableExtra(PARCEL_MOVIE);
 
+        if (favourited(getBaseContext(), movie.getId()) >= 1) {
+            this.getContentResolver().delete(
+                    Contract.Entry.CONTENT_URI,
+                    Contract.Entry.COLUMN_MOVIE_ID + DB_SIGN,
+                    new String[]{movie.getId()});
 
-
-
+        }
     }
 
     private boolean isNetworkAvailable() {

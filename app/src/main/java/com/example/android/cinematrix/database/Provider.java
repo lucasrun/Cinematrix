@@ -28,7 +28,7 @@ public class Provider extends ContentProvider {
     private static final String UPDATE_NOT_SUPPORTED = "Update is not supported for ";
     private static final String FAILED_TO_INSERT_ROW = "Failed to insert row for ";
     private static final String FIRST_ROW = "1";
-    private static final String DB_SIGN = "=?";
+    private static final String DB_SIGN = " = ?";
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
