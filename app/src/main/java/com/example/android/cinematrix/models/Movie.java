@@ -26,8 +26,6 @@ public class Movie implements Parcelable {
         }
     };
 
-    private static final String HTTP_POSTER_ENTRY_URL = "https://image.tmdb.org/t/p/w185";
-
     private String mId;
     private String mPoster;
     private String mTitle;
@@ -94,7 +92,7 @@ public class Movie implements Parcelable {
     }
 
     public String getPoster() {
-        return HTTP_POSTER_ENTRY_URL + mPoster;
+        return mPoster;
     }
 
     public void setPoster(String poster) {

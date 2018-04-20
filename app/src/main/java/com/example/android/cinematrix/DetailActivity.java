@@ -47,6 +47,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
     private static final String NO_INTERNET = "No internet connection found";
     private static final String YOUTUBE = "http://www.youtube.com/watch?v=";
     private static final String DB_SIGN = " = ?";
+    private static final String HTTP_POSTER_ENTRY_URL = "https://image.tmdb.org/t/p/w185";
+
     ImageView poster;
     TextView title, vote, release, plot;
     ListView listViewTrailer, listViewReview;
@@ -84,7 +86,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
          setting views
           */
         Picasso.with(this)
-                .load(mMovie.getPoster())
+                .load(HTTP_POSTER_ENTRY_URL + mMovie.getPoster())
                 .resize(POSTER_WIDTH, POSTER_HEIGHT)
                 .error(R.drawable.error_retrieving_movies)
                 .placeholder(R.drawable.retrieving_movies)
@@ -224,7 +226,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
 
         if (favourited(getBaseContext(), movie.getId()) == 0) {
             ContentValues values = new ContentValues();
-
             values.put(Contract.Entry.COLUMN_MOVIE_ID, movie.getId());
             values.put(Contract.Entry.COLUMN_POSTER, movie.getPoster());
             values.put(Contract.Entry.COLUMN_TITLE, movie.getTitle());

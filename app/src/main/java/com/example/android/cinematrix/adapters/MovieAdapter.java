@@ -19,12 +19,16 @@ import java.util.ArrayList;
 public class MovieAdapter extends BaseAdapter {
     private final Context mContext;
     private final ArrayList<Movie> mMovie;
+    private final String mChoice;
+    private final static String mFavouriteMovies = "favourite";
+    private static final String HTTP_POSTER_ENTRY_URL = "https://image.tmdb.org/t/p/w185";
     public final static int POSTER_HEIGHT = 278;
     public final static int POSTER_WIDTH = 185;
 
-    public MovieAdapter(Context context, ArrayList<Movie> movie) {
+    public MovieAdapter(Context context, ArrayList<Movie> movie, String choice) {
         mContext = context;
         mMovie = movie;
+        mChoice = choice;
     }
 
     public void add(Movie movie) {
@@ -70,12 +74,21 @@ public class MovieAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        Picasso.with(mContext)
-                .load(mMovie.get(position).getPoster())
-                .resize(POSTER_WIDTH, POSTER_HEIGHT)
-                .error(R.drawable.error_retrieving_movies)
-                .placeholder(R.drawable.retrieving_movies)
-                .into(imageView);
+        if (!(mChoice == mFavouriteMovies)) {
+            Picasso.with(mContext)
+                    .load(HTTP_POSTER_ENTRY_URL + mMovie.get(position).getPoster())
+                    .resize(POSTER_WIDTH, POSTER_HEIGHT)
+                    .error(R.drawable.error_retrieving_movies)
+                    .placeholder(R.drawable.retrieving_movies)
+                    .into(imageView);
+        } else {
+            Picasso.with(mContext)
+                    .load(HTTP_POSTER_ENTRY_URL + mMovie.get(position).getPoster())
+                    .resize(POSTER_WIDTH, POSTER_HEIGHT)
+                    .error(R.drawable.error_retrieving_movies)
+                    .placeholder(R.drawable.retrieving_movies)
+                    .into(imageView);
+        }
 
         return imageView;
     }

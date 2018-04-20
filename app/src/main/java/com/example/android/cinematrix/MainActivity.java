@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
     private static final String NO_INTERNET = "No internet connection found";
     GridView gridView;
 
+    private final static String mFavouriteMovies = "favourite";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
             ArrayList<Movie> movie = savedInstanceState.getParcelableArrayList(PARCEL_MOVIE);
 
             if (movie != null) {
-                gridView.setAdapter(new MovieAdapter(this, movie));
+                gridView.setAdapter(new MovieAdapter(this, movie, null));
             }
         }
 
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
             MovieTaskCompleted taskCompleted = new MovieTaskCompleted() {
                 @Override
                 public void movieTaskCompleted(ArrayList<Movie> movie) {
-                    gridView.setAdapter(new MovieAdapter(getApplicationContext(), movie));
+                    gridView.setAdapter(new MovieAdapter(getApplicationContext(), movie, null));
                 }
             };
 
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MovieTaskComplete
         MovieTaskCompleted taskCompleted = new MovieTaskCompleted() {
             @Override
             public void movieTaskCompleted(ArrayList<Movie> movie) {
-                gridView.setAdapter(new MovieAdapter(getApplicationContext(), movie));
+                gridView.setAdapter(new MovieAdapter(getApplicationContext(), movie, mFavouriteMovies));
             }
         };
 
