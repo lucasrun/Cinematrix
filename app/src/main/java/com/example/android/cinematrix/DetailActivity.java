@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,7 +47,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
     private static final String YOUTUBE = "http://www.youtube.com/watch?v=";
     ImageView poster;
     TextView title, vote, release, plot;
-
     ListView listViewTrailer, listViewReview;
 
     @Override
@@ -64,31 +62,30 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
         listViewTrailer = findViewById(R.id.list_view_trailer);
         listViewReview = findViewById(R.id.list_view_review);
 
-        Intent intent = getIntent();
-        Movie movie = intent.getParcelableExtra(PARCEL_MOVIE);
+        Movie mMovie = getIntent().getParcelableExtra(PARCEL_MOVIE);
 
         /*
          setting views
           */
         Picasso.with(this)
-                .load(movie.getPoster())
+                .load(mMovie.getPoster())
                 .resize(POSTER_WIDTH, POSTER_HEIGHT)
                 .error(R.drawable.error_retrieving_movies)
                 .placeholder(R.drawable.retrieving_movies)
                 .into(poster);
 
-        title.setText(movie.getTitle());
+        title.setText(mMovie.getTitle());
 
-        if (movie.getVote() != null) {
-            vote.setText(movie.getVote());
+        if (mMovie.getVote() != null) {
+            vote.setText(mMovie.getVote());
         } else vote.setText(MISSING_INFO);
 
-        if (movie.getRelease() != null) {
-            release.setText(movie.getRelease());
+        if (mMovie.getRelease() != null) {
+            release.setText(mMovie.getRelease());
         } else release.setText(MISSING_INFO);
 
-        if (movie.getPlot() != null) {
-            plot.setText(movie.getPlot());
+        if (mMovie.getPlot() != null) {
+            plot.setText(mMovie.getPlot());
         } else plot.setText(MISSING_INFO);
 
         listViewTrailer.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,8 +98,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
         });
 
         if (savedInstanceState == null) {
-            getTrailer(movie.getId());
-            getReview(movie.getId());
+            getTrailer(mMovie.getId());
+            getReview(mMovie.getId());
         } else {
             Parcelable[] parcelableTrailer = savedInstanceState.getParcelableArray(PARCEL_TRAILER);
             Parcelable[] parcelableReview = savedInstanceState.getParcelableArray(PARCEL_REVIEW);
@@ -208,21 +205,30 @@ public class DetailActivity extends AppCompatActivity implements TrailerTaskComp
     private void favourite_add() {
         // TODO: 2018-04-14 add to sql db if doesnt exist
 
-            ContentValues values = new ContentValues();
+        Movie mMovie = getIntent().getParcelableExtra(PARCEL_MOVIE);
 
-       //     values.put(Contract.Entry.MOVIE_URL, builder.toString());
+        ContentValues values = new ContentValues();
 
-            Uri uri = getContentResolver().insert(Contract.Entry.CONTENT_URI, values);
+        if (!Contract.Entry.COLUMN_MOVIE_ID.matches(mMovie.getId())) {
+            values.put(Contract.Entry.COLUMN_MOVIE_ID, mMovie.getId());
+            values.put(Contract.Entry.COLUMN_POSTER, mMovie.getPoster());
+            values.put(Contract.Entry.COLUMN_TITLE, mMovie.getTitle());
+            values.put(Contract.Entry.COLUMN_VOTE, mMovie.getVote());
+            values.put(Contract.Entry.COLUMN_RELEASE, mMovie.getRelease());
+            values.put(Contract.Entry.COLUMN_PLOT, mMovie.getPlot());
 
-            if (uri != null) {
-                Toast.makeText(this, "movie saved", Toast.LENGTH_SHORT).show();
-                Log.i("insert successsful", "suc");
-            } else
-                Log.i("insert not successsful", "suc");
+            this.getContentResolver().insert(Contract.Entry.CONTENT_URI, values);
+        }
+
     }
 
     private void favourite_remove() {
         // TODO: 2018-04-14 remove from sql db if exists
+
+
+
+
+
     }
 
     private boolean isNetworkAvailable() {
